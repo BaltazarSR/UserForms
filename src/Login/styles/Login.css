@@ -1,0 +1,30 @@
+@import url('https://fonts.google.com/specimen/Inter');
+
+body {
+    background-color: rgb(135, 161, 197);
+  }
+
+.container-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh;
+}
+
+.container-log{
+    height: 600px;
+    width: 1200px;
+    background: rgba(1, 18, 53, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.main-text {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-size: xx-large;
+    color: #FAFAFA;
+}

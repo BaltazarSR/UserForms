@@ -1,5 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './styles/Register.css'
 
 const Register = () => {
 
@@ -22,43 +24,66 @@ const Register = () => {
 
   return (
     <>
-      <div>Register</div>
-      <label>
-        First Name:
-        <input 
-          type="text" 
-          name='firstName'
-          onChange={handleChange}
-          value={form.firstName}
-        />
-      </label>
-      <label>
-        Last Name:
-        <input 
-          type="text" 
-          name='lastName'
-          onChange={handleChange}
-          value={form.lastName}
-        />
-      </label>
-      <label>
-        Email:
-        <input 
-          type="email" 
-          name='email'
-          onChange={handleChange}
-          value={form.email}
-        />
-      </label>
-      <label>
-        Password:
-        <input 
-          type="password" 
-          name='password'
-          onChange={handleChange}
-          value={form.password}
-        />
-      </label>
+      <div className="container-main">
+        <div className="container-log">
+          <div className='container-text'>
+            <div className="main-text">
+              Create an account
+            </div>
+            <div className='container-sub'>
+              <div className='sub-text'>
+                Already have an account?
+              </div>
+              <div>
+                <Link className='link-text' to="/login">Log in </Link>
+              </div>
+            </div>
+            <div className='container-input'>
+              <div className='container-name'>
+                <label className='input-box-half'>
+                  <input 
+                    type="text" 
+                    name='firstName'
+                    onChange={handleChange}
+                    value={form.firstName}
+                    placeholder='First Name'
+                  />
+                </label>
+                <label className='input-box-half'>
+                  <input 
+                    type="text" 
+                    name='lastName'
+                    onChange={handleChange}
+                    value={form.lastName}
+                    placeholder='Last Name'
+                  />
+                </label>
+              </div>
+              <label className='input-box'>
+              <input 
+                type="email"
+                name='email'
+                onChange={handleChange}
+                value={form.email}
+                placeholder='Email'
+              />
+              </label>
+              <label className='input-box'>
+                <input 
+                  type="password" 
+                  name='password'
+                  onChange={handleChange}
+                  value={form.password}
+                  placeholder="Password"
+                />
+              </label>
+              <button className='input-button'>
+                Create account
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
     
   )

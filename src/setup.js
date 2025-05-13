@@ -34,7 +34,7 @@ export const authFlow = (codeChallenge) => {
     const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
     const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 
-    const scope = 'user-read-private user-read-email';
+    const scope = 'user-read-playback-state user-modify-playback-state user-read-private user-read-email';
     const authUrl = new URL("https://accounts.spotify.com/authorize")
 
     const params =  {

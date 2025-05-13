@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { authFlow, getDataAuth } from './setup'
 import { getToken } from './getToken'
+import { useNavigate } from 'react-router'
 
 function App() {
   const [count, setCount] = useState(0)
 
+  const navigate = useNavigate();
   const handleSetup = async() => {
     const code = await getDataAuth();
     authFlow(code);
@@ -15,6 +17,7 @@ function App() {
 
   const handleGetToken = () => {
     getToken()
+    navigate('/dashboard');
   }
 
   return (

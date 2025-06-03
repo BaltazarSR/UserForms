@@ -3,8 +3,11 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { spotifyAPI } from '../api/spotifyAPI';
 import './styles/Register.css'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -23,12 +26,14 @@ const Register = () => {
   };
 
   const handleRegistro = async() => {
-    const url = "http://localhost:3000/api/users";
-    console.log(form);
-    const data = JSON.stringify(form);
-    console.log(data);
-    const res = await spotifyAPI(url, "POST", data, null);
-    console.log(res);
+    try {
+      const url = "http://localhost:3000/api/users";
+      const data = JSON.stringify(form);
+      const res = await spotifyAPI(url, "POST", data, null);
+      navigate("/");
+    } catch (error) {
+      console.error("Register error:", error);
+    }
   }
 
   return (
@@ -44,7 +49,7 @@ const Register = () => {
                 Already have an account?
               </div>
               <div>
-                <Link className='link-text' to="/login">Log in </Link>
+                <Link className='link-text' to="/">Log in </Link>
               </div>
             </div>
             <div className='container-input'>

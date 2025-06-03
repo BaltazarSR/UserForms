@@ -22,7 +22,7 @@
   height: 100vh;
 }
 
-.container-log {
+.container-log-setup {
     height: 600px;
     width: 1200px;
     background: rgba(1, 18, 53, 0.5);
@@ -30,10 +30,9 @@
     backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 20px;
-    padding-top: 100px;
     display: flex;
     flex-direction: column;
-    justify-content:flex-start;
+    justify-content: center;
     align-items: center; 
 }
 

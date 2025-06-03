@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { spotifyAPI } from './api/spotifyAPI';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css'
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+
   const selectTypes = [
     'album',
     'artist',
@@ -37,7 +41,7 @@ const Dashboard = () => {
   }
 
   const createFavs = async (favs) => {
-    const userId = 2;
+    const userId = localStorage.getItem("UserId");
     const url = `http://localhost:3000/api/users/${userId}/favorites`;
     const data = {
       items: favs,
@@ -98,13 +102,21 @@ const Dashboard = () => {
     console.log(play);
   }
 
+  const showFavs = () => {
+    navigate("/favs");
+  }
+
+  useEffect(() => {
+    getDeviceID();
+  }, []);
+
   return (
     <>
       <div className='container-main-dash'>
         <div className="container-log-dash">
           <h1 className='main-text'>Dashboard</h1>
           <div className='container-dashboard'>
-            <button className="input-button" onClick={getDeviceID}>Get Device ID</button>
+            <button className="input-button" onClick={showFavs}>Show favorites</button>
             <button className="input-button" onClick={saveFavs}>Save favorites</button>
             <div className='container-search'>
               <div className='sub-text-dash'>
@@ -138,7 +150,7 @@ const Dashboard = () => {
                   <img src={result.album.images[0].url} width={150} alt="Album Cover" />
                 </div>
                 <div className='song-title'>
-                  <p>{result.artists[0].name}</p>
+                  <p>{result.name}</p>
                 </div>
                 <div className='button-container'>
                   <button className="track-button" onClick={() => handlePlay(result.uri)}>Play</button>

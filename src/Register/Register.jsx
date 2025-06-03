@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { spotifyAPI } from '../api/spotifyAPI';
 import './styles/Register.css'
 
 const Register = () => {
 
   const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     password: ""
   })
@@ -21,6 +21,15 @@ const Register = () => {
     }
     setForm(newForm);
   };
+
+  const handleRegistro = async() => {
+    const url = "http://localhost:3000/api/users";
+    console.log(form);
+    const data = JSON.stringify(form);
+    console.log(data);
+    const res = await spotifyAPI(url, "POST", data, null);
+    console.log(res);
+  }
 
   return (
     <>
@@ -43,19 +52,10 @@ const Register = () => {
                 <label className='input-box-half'>
                   <input 
                     type="text" 
-                    name='firstName'
+                    name='name'
                     onChange={handleChange}
-                    value={form.firstName}
+                    value={form.name}
                     placeholder='First Name'
-                  />
-                </label>
-                <label className='input-box-half'>
-                  <input 
-                    type="text" 
-                    name='lastName'
-                    onChange={handleChange}
-                    value={form.lastName}
-                    placeholder='Last Name'
                   />
                 </label>
               </div>
@@ -77,7 +77,7 @@ const Register = () => {
                   placeholder="Password"
                 />
               </label>
-              <button className='input-button'>
+              <button className='input-button' onClick={handleRegistro}>
                 Create account
               </button>
             </div>

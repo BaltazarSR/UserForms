@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { spotifyAPI } from './api/spotifyAPI';
+import './Dashboard.css'
 
 const Dashboard = () => {
   const selectTypes = [
@@ -19,6 +20,36 @@ const Dashboard = () => {
   const [deviceID, setDeviceID] = useState('')
 
   const [results, setResults] = useState([]);
+
+  const [favorites, setFavorites] = useState([]);
+
+  const handleAddFavorite = (result) => {
+    console.log(result);
+
+    const isAlreadyFav = favorites.some((fav) => fav.id === result.id);
+
+    if(isAlreadyFav){
+      console.log("Ya esta en favs");
+      setFavorites((prev) => prev.filter((el) => el.id !== result.id));
+    } else {
+      setFavorites((prev) => [...prev, result]);
+    }
+  }
+
+  const createFavs = async (favs) => {
+    const userId = 2;
+    const url = `http://localhost:3000/api/users/${userId}/favorites`;
+    const data = {
+      items: favs,
+    }
+    const result = await spotifyAPI(url, "POST", JSON.stringify(data), null);
+    console.log(result);
+  }
+
+  const saveFavs = async() => {
+      createFavs(favorites);
+      console.log(favorites);
+  }
 
   const handleChange = (e) => {
 
@@ -69,41 +100,55 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>Dashboard</div>
-      <button onClick={getDeviceID}>Get Device ID</button>
-      <p>Search</p>
-      <input
-        name="song"
-        type="text"
-        value={search.song}
-        onChange={handleChange}
-      />
-      <p>Select Types:</p>
-      <select name="types" value={search.types} onChange={handleChange} >
-        {selectTypes.map((type) => (
-          <option key={type} value={type}>
-            {type}
-          </option>
-        ))}
-      </select>
+      <div className='container-main-dash'>
+        <div className="container-log-dash">
+          <h1 className='main-text'>Dashboard</h1>
+          <div className='container-dashboard'>
+            <button className="input-button" onClick={getDeviceID}>Get Device ID</button>
+            <button className="input-button" onClick={saveFavs}>Save favorites</button>
+            <div className='container-search'>
+              <div className='sub-text-dash'>
+                Search
+              </div>
+              <label className='input-box-half'>
+                <input
+                  name="song"
+                  type="text"
+                  value={search.song}
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+            <div className='sub-text-dash'>
+                Select Types
+            </div>
+            <select name="types" value={search.types} onChange={handleChange} className='select-dashboard'>
+              {selectTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
 
-    <button onClick={handleSearch}>Search</button>
-    
-    {results.map((result, idx) => (
-    <div key={idx}>
-        <div>
-        <img src={result.album.images[0].url} width={150} alt="Album Cover" />
+            <button className="search-button" onClick={handleSearch}>Search</button>
+            
+            {results.map((result, idx) => (
+            <div key={idx} className='track-container'>
+                <div>
+                  <img src={result.album.images[0].url} width={150} alt="Album Cover" />
+                </div>
+                <div className='song-title'>
+                  <p>{result.artists[0].name}</p>
+                </div>
+                <div className='button-container'>
+                  <button className="track-button" onClick={() => handlePlay(result.uri)}>Play</button>
+                  <button className="track-button" onClick={() => handleAddFavorite(result)}>AddFavorite</button>
+                </div>
+            </div>
+            ))}
+          </div>
         </div>
-        <div>
-        <p>{result.artists[0].name}</p>
-        </div>
-        <div>
-        <button onClick={() => handlePlay(result.uri)}>Play</button>
-        </div>
-    </div>
-    ))}
-
-
+      </div>
 
     </>
   );

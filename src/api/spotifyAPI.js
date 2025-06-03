@@ -5,7 +5,7 @@ export const spotifyAPI = async(url, method, body, token)=> {
             "Content-Type": "application/json",
             Authorization: "Bearer " + token,
         },
-        body: body ?? null
+        body: body ? JSON.stringify(body) : null
     });
     if(!response.ok) {
         return console.error(response)

@@ -46,13 +46,13 @@ const Dashboard = () => {
     const data = {
       items: favs,
     }
-    const result = await spotifyAPI(url, "POST", JSON.stringify(data), null);
+    const result = await spotifyAPI(url, "POST", data, null);
     console.log(result);
   }
 
-  const saveFavs = async() => {
-      createFavs(favorites);
-      console.log(favorites);
+  const saveFavs = async(track) => {
+      createFavs(track);
+      console.log(track);
   }
 
   const handleChange = (e) => {
@@ -98,7 +98,7 @@ const Dashboard = () => {
       uris: [song]
     };
     const url = `https://api.spotify.com/v1/me/player/play?device_id=${deviceID}`;
-    const play = await spotifyAPI(url, 'PUT', JSON.stringify(data), token);
+    const play = await spotifyAPI(url, 'PUT', data, token);
     console.log(play);
   }
 
@@ -117,7 +117,7 @@ const Dashboard = () => {
           <h1 className='main-text'>Dashboard</h1>
           <div className='container-dashboard'>
             <button className="input-button" onClick={showFavs}>Show favorites</button>
-            <button className="input-button" onClick={saveFavs}>Save favorites</button>
+            {/* <button className="input-button" onClick={saveFavs}>Save favorites</button> */}
             <div className='container-search'>
               <div className='sub-text-dash'>
                 Search
@@ -137,7 +137,7 @@ const Dashboard = () => {
             <select name="types" value={search.types} onChange={handleChange} className='select-dashboard'>
               {selectTypes.map((type) => (
                 <option key={type} value={type}>
-                  {type}
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
                 </option>
               ))}
             </select>
@@ -153,15 +153,14 @@ const Dashboard = () => {
                   <p>{result.name}</p>
                 </div>
                 <div className='button-container'>
-                  <button className="track-button" onClick={() => handlePlay(result.uri)}>Play</button>
-                  <button className="track-button" onClick={() => handleAddFavorite(result)}>AddFavorite</button>
+                  <button className="track-button" onClick={() => handlePlay(result.uri)}>▶</button>
+                  <button className="track-button" onClick={() => saveFavs(result)}>♥︎</button>
                 </div>
             </div>
             ))}
           </div>
         </div>
       </div>
-
     </>
   );
 };

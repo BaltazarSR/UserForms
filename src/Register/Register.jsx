@@ -28,8 +28,7 @@ const Register = () => {
   const handleRegistro = async() => {
     try {
       const url = "http://localhost:3000/api/users";
-      const data = JSON.stringify(form);
-      const res = await spotifyAPI(url, "POST", data, null);
+      const res = await spotifyAPI(url, "POST", form, null);
       navigate("/");
     } catch (error) {
       console.error("Register error:", error);
